@@ -28,3 +28,4 @@ catalina.base_IS_UNDEFINED/
 target/
 mvnw.cmd
 mvnw
+out/
