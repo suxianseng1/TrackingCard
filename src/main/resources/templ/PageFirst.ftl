@@ -145,7 +145,7 @@
                                             <w:sz w:val="28"/>
                                             <w:szCs w:val="32"/>
                                         </w:rPr>
-                                        <w:t>跟踪卡编号：</w:t>
+                                        <w:t>产品编号：</w:t>
                                     </w:r>
                                     <w:r w:rsidRPr="00E05593">
                                         <w:rPr>

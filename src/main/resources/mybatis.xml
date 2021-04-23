@@ -8,6 +8,7 @@
     <properties resource="jdbc.properties" />
     <settings>
         <setting name="callSettersOnNulls" value="true"/>
+        <setting name="logImpl" value="STDOUT_LOGGING"/>
     </settings>
 
     <!-- 为SQL映射配置文件的parameterType和resultType来设置别名。别名默认为首字母小写。 -->
