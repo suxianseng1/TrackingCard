@@ -14,12 +14,16 @@ public interface CardInfoDetailMapper {
     List<Map<String,Object>> getCardInfoList(@Param("tableName") String tableName, @Param("jobNumber") String jobNumber, @Param("processNo") String processNo,@Param("productNo") String productNo);
 
     @ResultType(Map.class)
-    @Select({ "select rownum as ROWNUMBER,a.* from (select j.MATERIAL_NAME,t.* from ${tableName} t left join e_job j on j.JOB_NUMBER = t.job_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo} order by to_number(CS)) a" })
+    @Select({ "select rownum as ROWNUMBER,a.* from (select j.MATERIAL_NAME,t.* from ${tableName} t left join e_job j on j.JOB_NUMBER = t.job_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo} and ((t.jdsj is not null) or (t.ddsj is not null) or (t.wd is not null) or (t.sd is not null) or (t.Actual_value is not null) or (t.wtjz is not null)) order by to_number(CS)) a" })
     List<Map<String, Object>> getF018CardInfoList(@Param("tableName") final String tableName, @Param("jobNumber") final String jobNumber, @Param("processNo") final String processNo, @Param("productNo") final String productNo);
 
     @ResultType(java.util.Map.class)
     @Select("select rownum as ROWNUMBER,v.WLMS as MATERIAL_NAME,t.*,v.ZLDJ,v.XXGF from XT_F016 t left join e_job j on j.JOB_NUMBER = t.job_no left join V_YCL v on v.WLBH = t.MATERIAL_NO  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
     List<Map<String,Object>> getF016CardInfoList( @Param("jobNumber") String jobNumber, @Param("processNo") String processNo,@Param("productNo") String productNo);
+
+    @ResultType(java.util.Map.class)
+    @Select("select rownum as ROWNUMBER,yqj.ZLDJ,yqj.WLMS MATERIAL_NAME,yqj.XXGF,t.* from  xt_f016 t join yqj on yqj.wlbh=t.material_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
+    List<Map<String,Object>> getF003CardInfoList( @Param("jobNumber") String jobNumber, @Param("processNo") String processNo,@Param("productNo") String productNo);
 
 
     @ResultType(Map.class)

@@ -11,6 +11,7 @@ import com.nokida.trackingcard.util.ZipUtil;
 import com.nokida.trackingcard.word.WordAction;
 import com.spire.doc.Document;
 import com.spire.doc.FileFormat;
+import freemarker.template.utility.StringUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.RandomUtils;
@@ -22,6 +23,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class DispatchCreateWordServiceImpl implements DispatchCreateWordService {
     static SqlSessionFactory factory;
@@ -98,6 +100,15 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
         List<Map<String, Object>> listInfo = new ArrayList<Map<String, Object>>();
         for (Map<String, Object> item : headerList) {
             if (item.containsKey("topListView")) {
+                List<Map<String, Object>> temp = ((List<Map<String, Object>>)item.get("topListView")).stream().filter(entry -> {
+                    if (ObjectUtils.allNotNull(entry.get("CARD_NAME"))){
+                        return true;
+                    } else {
+                        return false;
+                    }
+
+                }).collect(Collectors.toList());
+                item.put("topListView",temp);
                 listInfo.add(item);
             }
         }
@@ -241,6 +252,8 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
                 listInfo = cardInfoDetailMapper.getF016CardInfoList(jobNumber, map.get("PROCESS_ID").toString(), map.get("PRODUCT_NO").toString());
             } else if (map.get("TEMPLATE_ID").toString().equals("XT_F018")) {
                 listInfo = cardInfoDetailMapper.getF018CardInfoList(map.get("TEMPLATE_ID").toString(), jobNumber, map.get("PROCESS_ID").toString(), map.get("PRODUCT_NO").toString());
+            } else if (map.get("TEMPLATE_ID").toString().equals("XT_F003")) {
+                listInfo  = cardInfoDetailMapper.getF003CardInfoList(jobNumber, map.get("PROCESS_ID").toString(), map.get("PRODUCT_NO").toString());
             } else {
                 listInfo = cardInfoDetailMapper.getCardInfoList(map.get("TEMPLATE_ID").toString(), jobNumber, map.get("PROCESS_ID").toString(), map.get("PRODUCT_NO").toString());
             }
