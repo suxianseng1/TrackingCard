@@ -212,7 +212,7 @@
                                                     <w:color w:val="FF0000"/>
                                                     <w:szCs w:val="21"/>
                                                 </w:rPr>
-                                                <w:t>${list.MATERIAL_NAME!}${list.CARD_NAME!}</w:t>
+                                                <w:t>${list.MATERIAL_NAME!}${list.STEP_NAME!?html}${list.CARD_NAME!}</w:t>
                                             </w:r>
                                         </w:p>
                                     </w:tc>
