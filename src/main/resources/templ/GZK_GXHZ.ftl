@@ -191,7 +191,7 @@
                                             <w:i/>
                                             <w:szCs w:val="21"/>
                                         </w:rPr>
-                                        <w:t>${MATERIAL_NAME!}</w:t>
+                                        <w:t>${ZJMC!}</w:t>
                                     </w:r>
                                 </w:p>
                             </w:tc>
@@ -236,7 +236,7 @@
                                             <w:i/>
                                             <w:szCs w:val="21"/>
                                         </w:rPr>
-                                        <w:t>${DRAWING_NUM!}</w:t>
+                                        <w:t>${ZJTH!}</w:t>
                                     </w:r>
                                 </w:p>
                             </w:tc>

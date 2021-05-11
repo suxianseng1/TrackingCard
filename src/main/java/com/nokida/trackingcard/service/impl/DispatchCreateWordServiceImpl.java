@@ -201,12 +201,27 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
     private List<String> generatorFiles(List<Map<String, Object>> headerList, String dirPath) {
         CardInfoDetailMapper cardInfoDetailMapper = this.sqlSession.getMapper(CardInfoDetailMapper.class);
         List<String> filePathList = new ArrayList<String>();
+        Map<String,Object> theFirst = headerList.get(1);
         for (Map<String, Object> map : headerList) {
             String filePath = "";
             if (map.containsKey("topListView")) {
-                filePath = this.generatorTopListView((List<Map<String, Object>>) map.get("topListView"), dirPath);
+                String jobNumber = ((List<Map<String, Object>>) map.get("topListView")).get(0).get("JOB_NUMBER").toString();
+                String productNo =  ((List<Map<String, Object>>) map.get("topListView")).get(0).get("PRODUCT_NO").toString();
+                List<Map<String, Object>> temp = this.sqlSession.getMapper(TrackingCardSourceMapper.class).selectByJobNumberAndWbs(jobNumber, productNo);
+                List<Map<String, Object>> temp2 = new ArrayList<>();
+                temp2.add(temp.get(0));
+                for(int i = 1; i < temp.size(); i++) {
+                    if(temp.get(i).get("PROCESS_NO") == null)
+                        continue;
+                    if(temp.get(i).get("PROCESS_NO").equals(temp.get(i - 1).get("PROCESS_NO"))){
+                        temp2.get(temp2.size() - 1).put("CARD_NAME",temp2.get(temp2.size() - 1).get("CARD_NAME") + "," + temp.get(i).get("CARD_NAME"));
+                    } else {
+                        temp2.add(temp.get(i));
+                    }
+                }
+                filePath = this.generatorTopListView(temp2, dirPath,theFirst);
             } else {
-                filePath = this.generatorSingleFile(cardInfoDetailMapper, map, map.get("JOB_NUMBER").toString(), dirPath);
+                filePath = this.generatorSingleFile(cardInfoDetailMapper, map, map.get("JOB_NUMBER").toString(), dirPath,theFirst);
             }
             if (StringUtils.isNotBlank(filePath)) {
                 filePathList.add(filePath);
@@ -216,7 +231,7 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
         return filePathList;
     }
 
-    private String generatorTopListView(List<Map<String, Object>> listInfo, String dirPath) {
+    private String generatorTopListView(List<Map<String, Object>> listInfo, String dirPath,Map<String,Object> theFirst) {
         Map<String, Object> data = new HashMap<String, Object>();
         data.put("PRODUCT_NO", listInfo.get(1).get("PRODUCT_NO"));
         data.put("WBS", listInfo.get(1).get("WBS").toString());
@@ -224,6 +239,8 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
         data.put("MATERIAL_NAME", listInfo.get(1).get("MATERIAL_NAME").toString().split("^")[0]);
         data.put("WORD_NO", "GZK_GXHZ");
         data.put("ORDER_CODE", listInfo.get(1).get("ORDER_CODE"));
+        data.put("ZJMC",theFirst.get("MATERIAL_NAME"));
+        data.put("ZJTH",theFirst.get("DRAWING_NUM"));
         WordAction wordAction = new WordAction();
         String filePath = wordAction.createWord(listInfo, data, dirPath);
         return filePath;
@@ -237,7 +254,7 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
      * @param dirPath   存放文件的文件夹路径
      * @return 返回生成文件的绝对路径
      */
-    private String generatorSingleFile(CardInfoDetailMapper cardInfoDetailMapper, Map<String, Object> map, String jobNumber, String dirPath) {
+    private String generatorSingleFile(CardInfoDetailMapper cardInfoDetailMapper, Map<String, Object> map, String jobNumber, String dirPath,Map<String,Object> theFirst) {
         if (!ObjectUtils.allNotNull(map.get("PRODUCT_NO"))) {
             String message = "";
             /*if(!ObjectUtils.allNotNull(map.get("CARD_NAME")))
@@ -250,6 +267,7 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
         if (map.get("TEMPLATE_ID").toString().split("_").length > 1) {
             if (map.get("TEMPLATE_ID").toString().equals("XT_F016")) {
                 listInfo = cardInfoDetailMapper.getF016CardInfoList(jobNumber, map.get("PROCESS_ID").toString(), map.get("PRODUCT_NO").toString());
+
             } else if (map.get("TEMPLATE_ID").toString().equals("XT_F018")) {
                 listInfo = cardInfoDetailMapper.getF018CardInfoList(map.get("TEMPLATE_ID").toString(), jobNumber, map.get("PROCESS_ID").toString(), map.get("PRODUCT_NO").toString());
             } else if (map.get("TEMPLATE_ID").toString().equals("XT_F003")) {
@@ -260,8 +278,9 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
             if (org.apache.commons.collections.CollectionUtils.isNotEmpty(listInfo)) {
                 this.setHeaderAnotherData(map, listInfo.get(0));
             }
-
             WordAction wordAction = new WordAction();
+            map.put("ZJMC",theFirst.get("MATERIAL_NAME"));
+            map.put("ZJTH",theFirst.get("DRAWING_NUM"));
             String filePath = wordAction.createWord(listInfo, map, dirPath);
             return filePath;
         } else {

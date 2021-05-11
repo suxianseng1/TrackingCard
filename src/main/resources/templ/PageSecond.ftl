@@ -274,7 +274,7 @@
                                             <w:sz w:val="22"/>
                                             <w:szCs w:val="24"/>
                                         </w:rPr>
-                                        <w:t>${listInfo[0].ZJMC!?html}</w:t>
+                                        <w:t>${listInfo[0].MATERIAL_NAME!?html}</w:t>
                                     </w:r>
                                 </w:p>
                             </w:tc>
