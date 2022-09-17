@@ -18,11 +18,11 @@ public interface CardInfoDetailMapper {
     List<Map<String, Object>> getF018CardInfoList(@Param("tableName") final String tableName, @Param("jobNumber") final String jobNumber, @Param("processNo") final String processNo, @Param("productNo") final String productNo);
 
     @ResultType(java.util.Map.class)
-    @Select("select rownum as ROWNUMBER,v.WLMS as MATERIAL_NAME,t.*,v.ZLDJ,v.XXGF from XT_F016 t left join e_job j on j.JOB_NUMBER = t.job_no left join V_YCL v on v.WLBH = t.MATERIAL_NO  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
+    @Select("select rownum as ROWNUMBER,v.WLMC as MATERIAL_NAME,v.XHGG,t.*,v.ZLDJ,v.XXGF,v.JLDW,t.SINGLE_CODE from (select t.* from  xt_f016 t left join yqj on yqj.wlbh=t.material_no where yqj.id is null) t left join e_job j on j.JOB_NUMBER = t.job_no left join V_YCL v on v.WLBH = t.MATERIAL_NO  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
     List<Map<String,Object>> getF016CardInfoList( @Param("jobNumber") String jobNumber, @Param("processNo") String processNo,@Param("productNo") String productNo);
 
     @ResultType(java.util.Map.class)
-    @Select("select rownum as ROWNUMBER,yqj.ZLDJ,yqj.WLMS MATERIAL_NAME,yqj.XXGF,t.* from  xt_f016 t join yqj on yqj.wlbh=t.material_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
+    @Select("select rownum as ROWNUMBER,yqj.xhgg,yqj.mc,yqj.ZLDJ,yqj.WLMS MATERIAL_NAME,yqj.XXGF,t.* from  xt_f016 t join yqj on yqj.wlbh=t.material_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
     List<Map<String,Object>> getF003CardInfoList( @Param("jobNumber") String jobNumber, @Param("processNo") String processNo,@Param("productNo") String productNo);
 
 

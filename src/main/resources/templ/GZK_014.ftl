@@ -34,7 +34,7 @@
                 <w:sz w:val="48"/>
                 <w:szCs w:val="52"/>
               </w:rPr>
-              <w:t>${MATERIAL_NAME!?html}${STEP_NAME!?html}${CARD_NAME!}</w:t>
+              <w:t>${MATERIAL_NAME!?html}${CARD_NAME!}</w:t>
             </w:r>
           </w:p>
           <w:tbl>
@@ -829,7 +829,38 @@
                       <w:b/>
                       <w:sz w:val="22"/>
                     </w:rPr>
-                    <w:t>元器件名称/规格型号</w:t>
+                    <w:t>元器件名称</w:t>
+                  </w:r>
+                </w:p>
+              </w:tc>
+              <w:tc>
+                <w:tcPr>
+                  <w:tcW w:w="1276" w:type="dxa"/>
+                  <w:tcBorders>
+                    <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                    <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                    <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                    <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                  </w:tcBorders>
+                  <w:vAlign w:val="center"/>
+                </w:tcPr>
+                <w:p w14:paraId="15F82568" w14:textId="77777777" w:rsidR="00DD4E86" w:rsidRPr="007B54AC" w:rsidRDefault="00DD4E86" w:rsidP="008D6D32">
+                  <w:pPr>
+                    <w:ind w:leftChars="-30" w:left="-63" w:rightChars="-30" w:right="-63"/>
+                    <w:jc w:val="center"/>
+                    <w:rPr>
+                      <w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体"/>
+                      <w:b/>
+                      <w:sz w:val="22"/>
+                    </w:rPr>
+                  </w:pPr>
+                  <w:r>
+                    <w:rPr>
+                      <w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体" w:hint="eastAsia"/>
+                      <w:b/>
+                      <w:sz w:val="22"/>
+                    </w:rPr>
+                    <w:t>规格型号</w:t>
                   </w:r>
                 </w:p>
               </w:tc>
@@ -1086,7 +1117,7 @@
                       <w:b/>
                       <w:sz w:val="22"/>
                     </w:rPr>
-                    <w:t>批次号</w:t>
+                    <w:t>供应商批次</w:t>
                   </w:r>
                   <w:proofErr w:type="gramEnd"/>
                 </w:p>
@@ -1187,10 +1218,41 @@
 						  <w:kern w:val="0"/>
 						  <w:sz w:val="22"/>
 						</w:rPr>
-						<w:t>${list.MATERIAL_NAME!}</w:t>
+						<w:t>${list.MC!}</w:t>
 					  </w:r>
 					</w:p>
 				  </w:tc>
+                  <w:tc>
+                    <w:tcPr>
+                      <w:tcW w:w="1276" w:type="dxa"/>
+                      <w:tcBorders>
+                        <w:top w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        <w:left w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        <w:bottom w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                        <w:right w:val="single" w:sz="6" w:space="0" w:color="auto"/>
+                      </w:tcBorders>
+                    </w:tcPr>
+                    <w:p w14:paraId="76BF2864" w14:textId="77777777" w:rsidR="00DD4E86" w:rsidRPr="00C31FFA" w:rsidRDefault="00DD4E86" w:rsidP="008D6D32">
+                      <w:pPr>
+                        <w:ind w:rightChars="-30" w:right="-63"/>
+                        <w:rPr>
+                          <w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                          <w:bCs/>
+                          <w:kern w:val="0"/>
+                          <w:sz w:val="22"/>
+                        </w:rPr>
+                      </w:pPr>
+                      <w:r w:rsidRPr="00C31FFA">
+                        <w:rPr>
+                          <w:rFonts w:ascii="宋体" w:eastAsia="宋体" w:hAnsi="宋体" w:cs="宋体" w:hint="eastAsia"/>
+                          <w:bCs/>
+                          <w:kern w:val="0"/>
+                          <w:sz w:val="22"/>
+                        </w:rPr>
+                        <w:t>${list.XHGG!}</w:t>
+                      </w:r>
+                    </w:p>
+                  </w:tc>
 				  <w:tc>
 					<w:tcPr>
 					  <w:tcW w:w="567" w:type="dxa"/>
@@ -1436,7 +1498,7 @@
 						  <w:kern w:val="0"/>
 						  <w:sz w:val="22"/>
 						</w:rPr>
-						<w:t>${list.BATCH_NO!?html}</w:t>
+						<w:t>${list.G_BATCH!?html}</w:t>
 					  </w:r>
 					</w:p>
 				  </w:tc>

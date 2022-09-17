@@ -281,6 +281,16 @@ public class DispatchCreateWordServiceImpl implements DispatchCreateWordService 
             WordAction wordAction = new WordAction();
             map.put("ZJMC",theFirst.get("MATERIAL_NAME"));
             map.put("ZJTH",theFirst.get("DRAWING_NUM"));
+            if(listInfo != null){
+                for(Map<String, Object> m : listInfo){
+                    for (String key : m.keySet()) {
+                        if(ObjectUtils.allNotNull(m.get(key))){
+                            String value = m.get(key).toString().replace("&", "&amp;");
+                            m.put(key,value);
+                        }
+                    }
+                }
+            }
             String filePath = wordAction.createWord(listInfo, map, dirPath);
             return filePath;
         } else {
