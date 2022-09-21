@@ -10,7 +10,7 @@ import java.util.Map;
 public interface CardInfoDetailMapper {
 
     @ResultType(java.util.Map.class)
-    @Select("select rownum as ROWNUMBER,j.MATERIAL_NAME,t.* from ${tableName} t left join e_job j on j.JOB_NUMBER = t.job_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo}")
+    @Select("select rownum as ROWNUMBER,j.MATERIAL_NAME,t.* from ${tableName} t left join e_job j on j.JOB_NUMBER = t.job_no  where t.JOB_NO=#{jobNumber} and process_no=#{processNo} and product_no=#{productNo} order by QM_DESC")
     List<Map<String,Object>> getCardInfoList(@Param("tableName") String tableName, @Param("jobNumber") String jobNumber, @Param("processNo") String processNo,@Param("productNo") String productNo);
 
     @ResultType(Map.class)
